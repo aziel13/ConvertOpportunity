@@ -1,0 +1,22 @@
+<apex:page controller="Convert">
+ 	<apex:form >
+        <apex:sectionHeader title="Opportunity Convert" subtitle="{!oppToConvert.name}"/>
+        <apex:outputText value="{!functionDescription}"/>
+       
+    <apex:pageBlock mode="detail">
+        <apex:pageblockbuttons >
+            <apex:commandButton value="Convert" action="{!convertToLead}"/>
+        	<apex:commandButton value="Cancel" action="{!cancel}"/>
+        </apex:pageblockbuttons>
+        <apex:pageBlockSection title="Lead Details" columns="1">
+            
+            <apex:inputField value="{!inputLead.firstName}"/>
+            <apex:inputField value="{!inputLead.lastName}"/>
+            <apex:inputField value="{!inputLead.company}"/>
+
+        </apex:pageBlockSection>
+        
+    </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>
