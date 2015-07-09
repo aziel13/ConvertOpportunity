@@ -2,8 +2,16 @@
  	<apex:form >
         <apex:sectionHeader title="Opportunity Convert" subtitle="{!oppToConvert.name}"/>
         <apex:outputText value="{!functionDescription}"/>
-       
-    <apex:pageBlock mode="detail">
+ 
+ 	<apex:pageBlock mode="detail" rendered = "{!opportunityError}">
+ 		<apex:pageblockbuttons >
+        	<apex:commandButton value="Back" action="{!cancel}"/>
+        </apex:pageblockbuttons>
+        <apex:outputtext value="{!errorMsg}"/>
+ 	</apex:pageBlock>
+ 	      
+    <apex:pageBlock mode="detail" rendered = "{!Not(opportunityError)}">
+ 
         <apex:pageblockbuttons >
             <apex:commandButton value="Convert" action="{!convertToLead}"/>
         	<apex:commandButton value="Cancel" action="{!cancel}"/>

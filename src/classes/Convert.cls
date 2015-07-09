@@ -3,6 +3,27 @@ public class Convert {
     // The first version of this class will only work when there is a prior lead that the opportunity is derived from
 	
     private boolean firstRun{ get{if(firstRun == null) {firstRun = true;} return firstRun; } set;}
+	// error msg holder
+	private string errorMsg;
+	public string getErrorMsg () {
+		// make sure that the error msg is never null.
+		if (errorMsg == null) {
+			errorMsg = '';
+		}
+		
+		return errorMsg;
+	}
+	
+	private boolean opportunityError;
+	public boolean getOpportunityError () {
+		if (opportunityError == null) {
+			opportunityError = false;
+			// insure thet the opportunity is initialized
+			getOppToConvert();
+		}
+		return opportunityError;
+	}
+	
 	
     // the message output to the user to explain how this page is used
     private string functionDescription;
@@ -12,7 +33,6 @@ public class Convert {
         
         return functionDescription;
     }
-    
     
     // The opportunity to be converted back into a lead
     private opportunity oppToConvert;
@@ -27,15 +47,32 @@ public class Convert {
             // if the opportunity to convert is null and the oppid exists in the page parameters do a query for it
         	oppToConvert = [SELECT id,name  FROM Opportunity WHERE id =: oppId];
         	
-            // if the opportunity was found
-            if(oppToConvert != null) 
-              
+            // if the opportunity was not found
+            if(oppToConvert == null) {
+            
+            	opportunityError = True;
+            	
+            	errorMsg = 'Could not find the requested opportunity to convert. Please make sure to use the convert button on the detail page.';  
+            
+            
+            } else
                 // look for the lead that the opportunity was converted from
                 convertedLead = [SELECT name,firstname,lastname, company FROM Lead WHERE ConvertedOpportunityId =: oppId ALL ROWS];
             
+            if (convertedLead == null)
+            	errorMsg = 'Please enter the first name, last name, and company name you desire for the new lead';
+            else
+            	errorMsg = 'The first name, last name, and company name have been supplied for you based on the original converted lead';
             
             firstRun = false;
-        }
+        } else if(oppToConvert == null) {
+            
+            	opportunityError = True;
+            	
+            	errorMsg = 'An opportunity was not supplied to convert. Please make sure to use the convert button on the detail page.';  
+            
+            
+       	}
         
 		return oppToConvert;        
     }
