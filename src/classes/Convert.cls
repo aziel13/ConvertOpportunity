@@ -57,11 +57,11 @@ public class Convert {
             
             } else
                 // look for the lead that the opportunity was converted from
-                convertedLead = [SELECT name,firstname,lastname, company FROM Lead WHERE ConvertedOpportunityId =: oppId ALL ROWS];
+                inputLead = [SELECT name,firstname,lastname, company FROM Lead WHERE ConvertedOpportunityId =: oppId ALL ROWS];
             
             if (convertedLead == null)
             	errorMsg = 'Please enter the first name, last name, and company name you desire for the new lead';
-            else
+            else 
             	errorMsg = 'The first name, last name, and company name have been supplied for you based on the original converted lead';
             
             firstRun = false;
