@@ -58,9 +58,12 @@ public class Convert {
             } else
                 // look for the lead that the opportunity was converted from
                 inputLead = [SELECT name,firstname,lastname, company FROM Lead WHERE ConvertedOpportunityId =: oppId ALL ROWS];
-            
-            if (convertedLead == null)
+            // if no lead was found initialize the input lead as a blank lead and output a message to have the user value it
+            if (inputLead == null) {
+            	inputLead = new lead();
             	errorMsg = 'Please enter the first name, last name, and company name you desire for the new lead';
+            
+            }
             else 
             	errorMsg = 'The first name, last name, and company name have been supplied for you based on the original converted lead';
             
@@ -87,29 +90,26 @@ public class Convert {
         inputLead = value;
     }
     
-    // the lead that the opportunity was converted from
-    private Lead convertedLead;
-    public Lead getConvertedLead () {
-        if (convertedLead == null && firstRun)
-            getOppToConvert();
-        return convertedLead;
-    } 
-    
     // this method will create a new lead based on the opportunity selected
     public PageReference convertToLead () {
         PageReference returnRef;
         
-        if(convertedLead != null) {
+        if(inputLead != null) {
+        	// check if the firstname, lastname, and company are valued in the lead
+        	if(!String.isblank(inputLead.lastName) && !String.isblank(inputLead.company)) {
+        		Lead newLead = new lead(firstName = inputLead.firstname, lastName = inputLead.lastName, company = inputLead.company);    
         	
-            Lead newLead = new lead(firstName = convertedLead.firstname, lastName = convertedLead.lastName, company = convertedLead.company);    
+	            // if the new lead was succesfully valued
+	            if(newLead != null) {
+					// insert the new lead
+	            	insert newLead;
+	                // update the return reference to send the user to the newly created lead
+	                returnRef = new PageReference('/' + newLead.id); 
+	            }     
+        	}
         	
-            // if the new lead was succesfully valued
-            if(newLead != null) {
-				// insert the new lead
-            	insert newLead;
-                // update the return reference to send the user to the newly created lead
-                returnRef = new PageReference('/' + newLead.id); 
-            }     
+        	
+            
         }
         
         return returnRef;
