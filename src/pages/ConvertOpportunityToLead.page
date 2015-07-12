@@ -17,10 +17,10 @@
         	<apex:commandButton value="Cancel" action="{!cancel}"/>
         </apex:pageblockbuttons>
         <apex:pageBlockSection title="Lead Details" columns="1">
-            
-            <apex:inputField value="{!inputLead.firstName}"/>
-            <apex:inputField value="{!inputLead.lastName}"/>
-            <apex:inputField value="{!inputLead.company}"/>
+            <apex:outputText value = "{!errorMsg}" />
+            <apex:inputField value = "{!inputLead.firstName}"/>
+            <apex:inputField value = "{!inputLead.lastName}"/>
+            <apex:inputField value = "{!inputLead.company}"/>
 
         </apex:pageBlockSection>
         
