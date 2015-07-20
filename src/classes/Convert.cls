@@ -68,7 +68,7 @@ public class Convert {
             	errorMsg = 'The first name, last name, and company name have been supplied for you based on the original converted lead';
             
             firstRun = false;
-        } else if(oppToConvert == null) {
+        } else if (oppToConvert == null) {
             
             	opportunityError = True;
             	
