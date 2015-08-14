@@ -103,6 +103,11 @@ public class Convert {
 	            if(newLead != null) {
 					// insert the new lead
 	            	insert newLead;
+	            	
+	            	// update the converted lead field on the opportunity
+	            	oppToConvert.ConvertedLeadId__c = newLead.id;
+	            	update oppToConvert;
+	            	
 	                // update the return reference to send the user to the newly created lead
 	                returnRef = new PageReference('/' + newLead.id); 
 	            }     
