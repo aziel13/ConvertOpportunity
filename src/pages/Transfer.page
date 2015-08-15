@@ -21,10 +21,12 @@
             <apex:outputText value="Lead to transfer to:" />
             <apex:inputField  value="{!sourceOpportunity.ConvertedLeadId__c}"/>
             
-            <apex:outputText value="Transfer Attachments"/>
-            <apex:outputText value="Transfer Notes"/>
-            <apex:outputText value="Transfer Tasks"/>
-            <apex:outputText value="Transfer Events"/>
+            <apex:outputText value="Total number of records to be transfered: "/>
+            
+            <apex:inputcheckbox label="Transfer Attachments" value="{!transferAllAttachments}"/>
+            <apex:inputcheckbox label="Transfer Notes" value="{!transferAllNotes}"/>
+            <apex:inputcheckbox label="Transfer Tasks" value="{!transferAllTasks}"/>
+            <apex:inputcheckbox label="Transfer Events" value="{!transferAllEvents}"/>
             
             
 			

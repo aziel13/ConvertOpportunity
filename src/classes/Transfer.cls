@@ -46,6 +46,14 @@ public with sharing class Transfer {
         	if (sourceOpportunity == null) {
         		opportunityError = true;
         		errorMsg = 'An opportunity to transfer from has not been provided. Please go back to the opportunity and make use of the transfer button.';
+        	} else if(sourceOpportunity.ConvertedLeadId__c != null) {
+        		//
+        		// initialize transfer values by defualt to true if the lead id is valued
+        			transferAllAttachments = true;
+    				transferAllEvents = true;
+    				transferAllNotes = true;
+    				transferAllTasks = true;
+        	
         	}
         	
         	firstRun = false;
@@ -57,14 +65,6 @@ public with sharing class Transfer {
     // boolean to determine if the attachments will be transfered
     private boolean transferAllAttachments;
     public boolean getTransferAllAttachments() {
-    	
-    	// check if an opportunity is provied to the page
-    	string oppId = Apexpages.currentPage().getParameters().get('oppId');
-    	
-    	// initialize to true if the lead id is valued
-    	if(transferAllAttachments == null )
-    		transferAllAttachments = (targetLead == null) ? false : true;
-
     	return transferAllAttachments;
     }
     public void setTransferAllAttachments(boolean value) {
@@ -74,14 +74,6 @@ public with sharing class Transfer {
     // boolean to determine if the notes will be transfered
     private boolean transferAllNotes;
     public boolean getTransferAllNotes() {	
-    	
-    	// check if an opportunity is provied to the page
-    	string oppId = Apexpages.currentPage().getParameters().get('oppId');
-    	
-    	// initialize to true if the lead id is valued
-    	if(transferAllNotes == null )
-    		transferAllNotes = (targetLead == null) ? false : true;
-    	
     	return transferAllNotes;
     }
     public void setTransferAllNotes(boolean value) {
@@ -91,14 +83,6 @@ public with sharing class Transfer {
     // boolean to determine if the tasks will be transfered
     private boolean transferAllTasks;
     public boolean getTransferAllTasks() {	
-    	
-    	// check if an opportunity is provied to the page
-    	string oppId = Apexpages.currentPage().getParameters().get('oppId');
-    	
-    	// initialize to true if the lead id is valued
-    	if(transferAllTasks == null )
-    		transferAllTasks = (targetLead == null) ? false : true;
-    	
     	return transferAllTasks;
     }
     public void setTransferAllTasks(boolean value) {
@@ -108,26 +92,10 @@ public with sharing class Transfer {
     // boolean to determine if the events will be transfered
     private boolean transferAllEvents;
     public boolean getTransferAllEvents() {	
-    	
-    	// check if an opportunity is provied to the page
-    	string oppId = Apexpages.currentPage().getParameters().get('oppId');
-    	
-    	// initialize to true if the lead id is valued
-    	if(transferAllEvents == null )
-    		transferAllEvents = (targetLead == null) ? false : true;
-    	
     	return transferAllEvents;
     }
     public void setTransferAllEvents(boolean value) {
     	transferAllEvents = value;
-    }
-    
-    
-    // target lead to transfer to
-    private Lead targetLead;
-    public Lead getTargetLead () {
-    	
-    	return targetLead;
     }
     
     private integer totalRecordsToTransfer;
