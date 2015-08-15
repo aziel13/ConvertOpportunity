@@ -13,13 +13,19 @@
     <apex:pageBlock mode="detail" rendered = "{!Not(opportunityError)}">
  
         <apex:pageblockbuttons >
-            
+            <apex:commandButton value="Transfer" action="{!transfer}"/>
         	<apex:commandButton value="Cancel" action="{!cancel}"/>
         </apex:pageblockbuttons>
         <apex:pageBlockSection title="Lead Search" columns="1">
             
             <apex:outputText value="Lead to transfer to:" />
             <apex:inputField  value="{!sourceOpportunity.ConvertedLeadId__c}"/>
+            
+            <apex:outputText value="Transfer Attachments"/>
+            <apex:outputText value="Transfer Notes"/>
+            <apex:outputText value="Transfer Tasks"/>
+            <apex:outputText value="Transfer Events"/>
+            
             
 			
         </apex:pageBlockSection>
