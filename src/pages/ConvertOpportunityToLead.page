@@ -21,7 +21,8 @@
             <apex:inputField value = "{!inputLead.firstName}"/>
             <apex:inputField value = "{!inputLead.lastName}"/>
             <apex:inputField value = "{!inputLead.company}"/>
-
+            <apex:inputCheckBox label = "Transfer Attachments, Notes, tasks, or events to new lead" value = "{!transferContent}" />
+			
         </apex:pageBlockSection>
         
     </apex:pageBlock>

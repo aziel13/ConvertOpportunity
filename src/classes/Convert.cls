@@ -34,6 +34,17 @@ public class Convert {
         return functionDescription;
     }
     
+    private boolean transferContent;
+    public boolean getTransferContent() {
+    	if(transferContent == null)
+    		transferContent = true;
+    	
+    	return transferContent;
+    }
+    public void setTransferContent(boolean value) {
+    	transferContent = value;
+    }
+    
     // The opportunity to be converted back into a lead
     private opportunity oppToConvert;
     public Opportunity getOppToConvert() {
@@ -108,6 +119,12 @@ public class Convert {
 	            	oppToConvert.ConvertedLeadId__c = newLead.id;
 	            	update oppToConvert;
 	            	
+	            	// if transfer is true go to the transfer page
+	            	if(transferContent)
+	            		returnRef = new PageReference('/apex/Transfer?oppId=' + oppToConvert.id);
+	            	// if transfer is false go to the lead page
+	            	
+	            	else
 	                // update the return reference to send the user to the newly created lead
 	                returnRef = new PageReference('/' + newLead.id); 
 	            }     
