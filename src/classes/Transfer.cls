@@ -1,5 +1,26 @@
 public with sharing class Transfer {
-
+	
+	// an inner class that holds the name of the object that can be transfred, how many would be transfered, and if it should be transfred.
+	public class transferableSObject {
+		
+		public boolean isTransferable{get;set;}
+		public integer transferableCount{get;set;}
+		public string name{get;set;}
+		
+		// initializer for transferable object
+		public transferableSObject (string name, integer transferableCount, boolean isTransferable) {
+			
+			this.isTransferable = isTransferable;
+			this.transferableCount = transferableCount;
+			this.name = name;
+		
+		}
+		
+		
+	}
+	
+	
+	
 	// class to transfer notes, attachments, tasks, and events from an opportunity to a lead.
 	private boolean firstRun{ get{if(firstRun == null) {firstRun = true;} return firstRun; } set;}
 	// error msg holder
@@ -61,6 +82,32 @@ public with sharing class Transfer {
         
     	return sourceOpportunity;
     }
+    
+    // reference class variable
+	private Reference reference;
+    
+    // list of transferable objects
+    private list<transferableSObject> transferableSObjects;
+    public list<transferableSObject> getTransferableSObjects() {
+    	if(transferableSObjects == null) {
+    		// initialize the reference class 
+    		reference = new Reference();
+    		
+    		// populate the transferable object based on the reference class
+    		for(String transferableSObject :reference.getTransferableLabelToName ().keyset())
+    			transferableSObjects.add( new transferableSObject(transferableSObject, 0 , false ));
+    		
+    		
+    	}
+    	
+    	return transferableSObjects;
+    }
+    public void getTransferableSObjects(list<transferableSObject> value) {
+    	
+   		transferableSObjects = value;
+   		
+    }
+    
     
     // boolean to determine if the attachments will be transfered
     private boolean transferAllAttachments;
@@ -136,11 +183,36 @@ public with sharing class Transfer {
     	}
     }
     
+    // method to update the calculation of how many items are transferable. Each is limited to 10001 to prevent query over
+    
+    public void reCalculateTransferables() {
+    	
+    	
+    	
+    	for( transferableSObject  obj : transferableSObjects ) {
+    		
+    		
+    		string query = 'Select Count() From '+ reference.getTransferableLabelToName().get(obj.name) 
+    		+' Where '+reference.getTransferableLabelToLookup ().get(obj.name)+' = :oppId And IsDeleted=false Limit 10001';
+    		
+    		obj.transferableCount = Database.countQuery(query);
+    	}
+    }
+    
     // method to determine the total number of records to transfer
     public integer totolRecordsToTransfer( string oppId  ) {
     	
     	// cumlative number of records to be queried
     	integer recordsQueried = 0;
+    	
+    	for( transferableSObject  obj : transferableSObjects ) {
+    		
+    		if (obj.isTransferable) {
+    			
+    			
+    		}
+    		
+    	}
     	
     	// if attachments are to be transfered count how many within 10,001
     	if (transferAllAttachments)

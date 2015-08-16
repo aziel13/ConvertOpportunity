@@ -16,22 +16,26 @@
             <apex:commandButton value="Transfer" action="{!transfer}"/>
         	<apex:commandButton value="Cancel" action="{!cancel}"/>
         </apex:pageblockbuttons>
-        <apex:pageBlockSection title="Lead Search" columns="1">
+        <apex:pageBlockSection title="Lead Search" columns="1" >
             
             <apex:outputText value="Lead to transfer to:" />
             <apex:inputField  value="{!sourceOpportunity.ConvertedLeadId__c}"/>
             
             <apex:outputText value="Total number of records to be transfered: "/>
             
+            
+			
+        </apex:pageBlockSection>
+        <apex:pageblockSection columns="1">
+        
+        
             <apex:inputcheckbox label="Transfer Attachments" value="{!transferAllAttachments}"/>
             <apex:inputcheckbox label="Transfer Notes" value="{!transferAllNotes}"/>
             <apex:inputcheckbox label="Transfer Tasks" value="{!transferAllTasks}"/>
             <apex:inputcheckbox label="Transfer Events" value="{!transferAllEvents}"/>
             
-            
-			
-        </apex:pageBlockSection>
         
+        </apex:pageblockSection>
     </apex:pageBlock>
     </apex:form>
     
